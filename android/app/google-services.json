@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "915080686531",
+    "firebase_url": "https://treehacks-project.firebaseio.com",
+    "project_id": "treehacks-project",
+    "storage_bucket": "treehacks-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915080686531:android:16067db765c59670",
+        "android_client_info": {
+          "package_name": "com.example.treehacks2019whiteboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915080686531-rabal4qr217dlblqcg9t1nimlk3g132v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC247NLbEnDdI6L0uovoZ3I3Ghe9TqBvo0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
