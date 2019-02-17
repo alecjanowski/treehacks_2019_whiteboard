@@ -226,15 +226,15 @@ class _HomePageState extends State<HomePage> {
                 child: new Text('Logout',
                     style: new TextStyle(fontSize: 17.0, color: Colors.white)),
                 onPressed: _signOut),
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PostRoute()),
-                );
-              },
-            ),
+//            IconButton(
+//              icon: Icon(Icons.add),
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => PostRoute()),
+//                );
+//              },
+//            ),
           ],
         ),
         body: _showTodoList(),
@@ -266,44 +266,6 @@ class _HomePageState extends State<HomePage> {
       title: Text(
         comment,
         style: _biggerFont,
-      ),
-    );
-  }
-}
-
-class PostRoute extends StatefulWidget {
-  @override
-  createState() => _PostRouteState();
-}
-
-class _PostRouteState extends State<PostRoute> {
-  bool _isPushed = false;
-  var _color = Colors.purple;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-//            Navigator.pop(context);
-            setState(() {
-              if (_isPushed) {
-                print('I was pressed');
-                _color = Colors.red;
-                _isPushed = false;
-              } else {
-                print('I was unpressed');
-                _color = Colors.blue;
-                _isPushed = true;
-              }
-            });
-          },
-          color: _color,
-        ),
       ),
     );
   }

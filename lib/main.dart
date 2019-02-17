@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
         title: 'Login',
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
-          primarySwatch: Colors.blue,
+            primarySwatch: Colors.orange,
+            fontFamily: 'Helvetica'
         ),
         home: new RootPage(auth: new Auth()));
   }
