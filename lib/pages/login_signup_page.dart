@@ -181,6 +181,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     }
   }
 
+
+
   Widget _showLogo() {
     return new Hero(
       tag: 'hero',
@@ -189,7 +191,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
           radius: 48.0,
-          child: Image.asset('assets/flutter-icon.png'),
+          child: Image.asset('assets/Untitled-Artwork.png'),
         ),
       ),
     );
