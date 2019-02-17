@@ -199,46 +199,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-//  Widget _showTodoList() {
-//    if (_todoList.length > 0) {
-//      return ListView.builder(
-//          shrinkWrap: true,
-//          itemCount: _todoList.length,
-//          itemBuilder: (BuildContext context, int index) {
-//            String todoId = _todoList[index].key;
-//            String subject = _todoList[index].subject;
-//            bool completed = _todoList[index].completed;
-//            String userId = _todoList[index].userId;
-//            return Dismissible(
-//              key: Key(todoId),
-//              background: Container(color: Colors.red),
-//              onDismissed: (direction) async {
-//                _deleteTodo(todoId, index);
-//              },
-//              child: ListTile(
-//                title: Text(
-//                  subject,
-//                  style: TextStyle(fontSize: 20.0),
-//                ),
-//                trailing: IconButton(
-//                    icon: (completed)
-//                        ? Icon(
-//                      Icons.done_outline,
-//                      color: Colors.green,
-//                      size: 20.0,
-//                    )
-//                        : Icon(Icons.done, color: Colors.grey, size: 20.0),
-//                    onPressed: () {
-//                      _updateTodo(_todoList[index]);
-//                    }),
-//              ),
-//            );
-//          });
-//    } else {
-//      return Center(child: Text("Welcome. Your list is empty",
-//        textAlign: TextAlign.center,
-//        style: TextStyle(fontSize: 30.0),));
-//    }
+  Widget _showTodoList() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
+
+          final index = i ~/ 2; /*3*/
+          if (index >= _comments.length) {
+            _comments.add('New Comment');
+          }
+          return _buildRow(_comments[index]);
+        });
   }
 
   var _comments = <String>['I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. ', 'I am tired', 'I am excited'];
