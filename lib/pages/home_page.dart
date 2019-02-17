@@ -234,6 +234,23 @@ class _HomePageState extends State<HomePage> {
 //            ),
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 0, // this will be set when a new tab is tapped
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              title: new Text('Local'),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.mail),
+              title: new Text('Events'),
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                title: Text('Polls')
+            )
+          ],
+        ),
         body: StreamBuilder(
           stream: AppServices.getFB().getFirestore().collection('messages').snapshots(), //gets data from firestore
           builder: (context, snapshot) { //builds the message list from snapshot data

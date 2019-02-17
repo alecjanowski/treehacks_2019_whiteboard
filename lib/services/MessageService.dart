@@ -8,4 +8,7 @@ abstract class MessageService {
 
   Future<bool> postMessage(String content, String userId);
 
+
+
+
 }
