@@ -212,10 +212,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(
-            'Whiteboard',
-            style: new TextStyle(color: Colors.white),
-          ),
+         title: DecoratedBox(
+        decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/logoWhite.png'),
+      // ...,
+    ))),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
