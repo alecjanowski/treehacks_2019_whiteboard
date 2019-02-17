@@ -188,7 +188,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         child: CircleAvatar(
           backgroundColor: Colors.orange,
-          radius: 118.0,
+          radius: 138.0,
           child: Image.asset('assets/logoWhite.png'),
         ),
       ),
