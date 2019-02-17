@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treehacks_2019_whiteboard/models/message.dart';
 import 'package:treehacks_2019_whiteboard/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:treehacks_2019_whiteboard/models/todo.dart';
@@ -262,11 +263,19 @@ class _HomePageState extends State<HomePage> {
         body: TextWall(latitude: 1.0, longitude: 1.0, userid: userId),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _showDialog(context);
+            _postMessage("test message boiiiiiiiiiiiiiiiiiii");
           },
           tooltip: 'Increment',
           child: Icon(Icons.add),
         )
     );
+  }
+
+  _postMessage(String content) {
+
+    final mainReference = FirebaseDatabase.instance.reference().child("/treehacks-project");
+    Message message = new Message(content, widget.userId);
+    mainReference.push().set(message.toJson());
+
   }
 }
