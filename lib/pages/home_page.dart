@@ -5,6 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:treehacks_2019_whiteboard/models/todo.dart';
 import 'dart:async';
 
+import 'package:treehacks_2019_whiteboard/wchat.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.onSignedOut})
       : super(key: key);
@@ -238,7 +240,7 @@ class _HomePageState extends State<HomePage> {
 //            ),
           ],
         ),
-        body: _showTodoList(),
+        body: new TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0),
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
             _showDialog(context);
