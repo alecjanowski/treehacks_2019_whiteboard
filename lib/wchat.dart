@@ -42,8 +42,8 @@ class TextWallState extends State<TextWall> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Stack(
+    return buildListMessage();
+    /*return Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
@@ -56,54 +56,50 @@ class TextWallState extends State<TextWall> {
           // Loads
           buildLoading()
         ],
-      ),
+      );*/
       // loading
-      onWillPop: onBackPress,
-    );
   }
 
   Widget buildListMessage() {
-    return Flexible(
-      child: location == ''
-          ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7e00))))
-          : StreamBuilder(
+    return Scaffold(
+      body: StreamBuilder(
         stream: AppServices.getFB().getFirestore().collection('messages').snapshots(), //gets data from firestore
         builder: (context, snapshot) { //builds the message list from snapshot data
-          if (!snapshot.hasData) {
+          /*if (!snapshot.hasData) {
             return Center(
                 child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7e00))));
-          } else {
+          } else {*/
             listMessage = snapshot.data.documents;
             return ListView.builder(
-              padding: EdgeInsets.all(10.0),
-              itemBuilder: (context, index) => buildItem(index, snapshot.data.documents[index]),
+              //padding: EdgeInsets.all(10.0),
+              itemBuilder: (context, index) {
+                return buildItem(index, listMessage[index]['message']);
+              },
               itemCount: snapshot.data.documents.length,
               reverse: true,
               controller: listScrollController,
             );
-          }
         },
       ),
     );
   }
 
   // Draws each individual message
-  Widget buildItem(int index, DocumentSnapshot document) {
-
+  Widget buildItem(int index, String document) {
       return Row(
         children: <Widget>[
           Container(
             child: Text(
-              document['message'],
-              style: TextStyle(color: Color(0xfffff5)),
+              document,
+              
             ),
-            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            /*padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
             width: 200.0,
             decoration: BoxDecoration(color: Color(0xff9835), borderRadius: BorderRadius.circular(8.0)),
-            margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20.0 : 10.0, right: 10.0),
+            margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20.0 : 10.0, right: 10.0),*/
           )
         ],
-        mainAxisAlignment: MainAxisAlignment.end,
+        //mainAxisAlignment: MainAxisAlignment.end,
       );
 
   }

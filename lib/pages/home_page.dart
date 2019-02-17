@@ -190,8 +190,7 @@ class _HomePageState extends State<HomePage> {
 //            ),
           ],
         ),
-        body: new TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0
-        ),
+        body: TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0),
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
             _showDialog(context);
