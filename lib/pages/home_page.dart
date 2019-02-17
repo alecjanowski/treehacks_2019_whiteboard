@@ -199,47 +199,50 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _showTodoList() {
-    if (_todoList.length > 0) {
-      return ListView.builder(
-          shrinkWrap: true,
-          itemCount: _todoList.length,
-          itemBuilder: (BuildContext context, int index) {
-            String todoId = _todoList[index].key;
-            String subject = _todoList[index].subject;
-            bool completed = _todoList[index].completed;
-            String userId = _todoList[index].userId;
-            return Dismissible(
-              key: Key(todoId),
-              background: Container(color: Colors.red),
-              onDismissed: (direction) async {
-                _deleteTodo(todoId, index);
-              },
-              child: ListTile(
-                title: Text(
-                  subject,
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                trailing: IconButton(
-                    icon: (completed)
-                        ? Icon(
-                      Icons.done_outline,
-                      color: Colors.green,
-                      size: 20.0,
-                    )
-                        : Icon(Icons.done, color: Colors.grey, size: 20.0),
-                    onPressed: () {
-                      _updateTodo(_todoList[index]);
-                    }),
-              ),
-            );
-          });
-    } else {
-      return Center(child: Text("Welcome. Your list is empty",
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 30.0),));
-    }
+//  Widget _showTodoList() {
+//    if (_todoList.length > 0) {
+//      return ListView.builder(
+//          shrinkWrap: true,
+//          itemCount: _todoList.length,
+//          itemBuilder: (BuildContext context, int index) {
+//            String todoId = _todoList[index].key;
+//            String subject = _todoList[index].subject;
+//            bool completed = _todoList[index].completed;
+//            String userId = _todoList[index].userId;
+//            return Dismissible(
+//              key: Key(todoId),
+//              background: Container(color: Colors.red),
+//              onDismissed: (direction) async {
+//                _deleteTodo(todoId, index);
+//              },
+//              child: ListTile(
+//                title: Text(
+//                  subject,
+//                  style: TextStyle(fontSize: 20.0),
+//                ),
+//                trailing: IconButton(
+//                    icon: (completed)
+//                        ? Icon(
+//                      Icons.done_outline,
+//                      color: Colors.green,
+//                      size: 20.0,
+//                    )
+//                        : Icon(Icons.done, color: Colors.grey, size: 20.0),
+//                    onPressed: () {
+//                      _updateTodo(_todoList[index]);
+//                    }),
+//              ),
+//            );
+//          });
+//    } else {
+//      return Center(child: Text("Welcome. Your list is empty",
+//        textAlign: TextAlign.center,
+//        style: TextStyle(fontSize: 30.0),));
+//    }
   }
+
+  var _comments = <String>['I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. ', 'I am tired', 'I am excited'];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +253,16 @@ class _HomePageState extends State<HomePage> {
             new FlatButton(
                 child: new Text('Logout',
                     style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-                onPressed: _signOut)
+                onPressed: _signOut),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PostRoute()),
+                );
+              },
+            ),
           ],
         ),
         body: _showTodoList(),
@@ -261,6 +273,66 @@ class _HomePageState extends State<HomePage> {
           tooltip: 'Increment',
           child: Icon(Icons.add),
         )
+    );
+  }
+  Widget _buildSuggestions() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
+
+          final index = i ~/ 2; /*3*/
+          if (index >= _comments.length) {
+            _comments.add('New Comment');
+          }
+          return _buildRow(_comments[index]);
+        });
+  }
+
+  Widget _buildRow(String comment) {
+    return ListTile(
+      title: Text(
+        comment,
+        style: _biggerFont,
+      ),
+    );
+  }
+}
+
+class PostRoute extends StatefulWidget {
+  @override
+  createState() => _PostRouteState();
+}
+
+class _PostRouteState extends State<PostRoute> {
+  bool _isPushed = false;
+  var _color = Colors.purple;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+//            Navigator.pop(context);
+            setState(() {
+              if (_isPushed) {
+                print('I was pressed');
+                _color = Colors.red;
+                _isPushed = false;
+              } else {
+                print('I was unpressed');
+                _color = Colors.blue;
+                _isPushed = true;
+              }
+            });
+          },
+          color: _color,
+        ),
+      ),
     );
   }
 }
