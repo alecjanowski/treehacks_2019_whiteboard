@@ -3,6 +3,7 @@ import 'package:treehacks_2019_whiteboard/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:treehacks_2019_whiteboard/models/todo.dart';
 import 'dart:async';
+import 'package:treehacks_2019_whiteboard/wchat.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.onSignedOut})
@@ -13,10 +14,14 @@ class HomePage extends StatefulWidget {
   final String userId;
 
   @override
-  State<StatefulWidget> createState() => new _HomePageState();
+  State<StatefulWidget> createState() => new _HomePageState(userId: userId);
 }
 
 class _HomePageState extends State<HomePage> {
+  String userId;
+
+  _HomePageState({Key key, @required this.userId});
+
   List<Todo> _todoList;
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
@@ -244,6 +249,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+
         appBar: new AppBar(
           title: new Text('Flutter login demo'),
           actions: <Widget>[
@@ -253,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: _signOut)
           ],
         ),
-        body: _showTodoList(),
+        body: TextWall(latitude: 1.0, longitude: 1.0, userid: userId),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _showDialog(context);
