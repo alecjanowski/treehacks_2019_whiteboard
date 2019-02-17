@@ -22,10 +22,14 @@ class FirebaseMessageService implements MessageService {
   }
 
   @override
-  Future<bool> postMessage(String content) {
+  Future<bool> postMessage(String content, String userId) {
     _messageCollection.add({
-    "key": "testing",
-    "message": content});
+    "message": content,
+    "likes": [],
+    "dislikes": [],
+    "userid": userId,
+    "timestamp": DateTime.now()
+    });
   }
 
 

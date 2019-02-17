@@ -6,6 +6,6 @@ abstract class MessageService {
   api methods
    */
 
-  Future<bool> postMessage(String content);
+  Future<bool> postMessage(String content, String userId);
 
 }

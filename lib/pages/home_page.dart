@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentSnapshot;
 import 'package:flutter/material.dart';
 import 'package:treehacks_2019_whiteboard/AppServices.dart';
 import 'package:treehacks_2019_whiteboard/services/authentication.dart';
@@ -21,6 +22,10 @@ class _HomePageState extends State<HomePage> {
   List<Todo> _todoList;
 
   var listMessage;
+
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  Map<String,List<String>> userlikes = Map();
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -193,7 +198,7 @@ class _HomePageState extends State<HomePage> {
               new FlatButton(
                   child: const Text('Post'),
                   onPressed: () {
-                    AppServices.getMessageService().postMessage(_textEditingController.text.toString());
+                    AppServices.getMessageService().postMessage(_textEditingController.text.toString(), widget.userId);
                     _addNewTodo(_textEditingController.text.toString());
                     Navigator.pop(context);
                   })
@@ -202,22 +207,6 @@ class _HomePageState extends State<HomePage> {
         }
     );
   }
-
-  Widget _showTodoList() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
-          final index = i ~/ 2; /*3*/
-          if (index < _comments.length) {
-            return _buildRow(_comments[index]);
-          }
-        });
-  }
-
-  var _comments = <String>['I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. ', 'I am tired', 'I am excited'];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  final Set<String> _likedComments = new Set<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                   if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
                   final index = i ~/ 2; /*3*/
                   if (index < snapshot.data.documents.length) {
-                    return _buildRow(listMessage[index]['message']);
+                    return _buildRow(listMessage[index]['message']/*, listMessage[index]['likes'], listMessage[index]['dislikes']*/);
                   }
                 },
               reverse: true,
@@ -279,26 +268,37 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildRow(String comment) {
-    final bool alreadyLiked = _likedComments.contains(comment);
+  Widget _buildRow(String comment/*, List<String> likes, List<String> dislikes*/) {
+    bool liked = false;
+    if(userlikes != Null && userlikes.containsKey(comment)) {
+      liked = userlikes[comment].contains(widget.userId);
+    }
+    else {
+      userlikes[comment] = [];
+    }
+    /*bool disliked = false;
+    if(likes != Null && dislikes != Null) {
+      liked = likes.contains(widget.userId);
+      disliked = dislikes.contains(widget.userId);
+    }*/
     return ListTile(
       title: Text(
         comment,
         style: _biggerFont,
       ),
       trailing: new Icon(
-        alreadyLiked ? Icons.favorite : Icons.favorite_border,
-        color: alreadyLiked ? Colors.red : null,
+        liked ? Icons.favorite : Icons.favorite_border,
+        color: liked ? Colors.red : null,
       ),
       onTap: () {      // Add 9 lines from here...
         setState(() {
-          if (alreadyLiked) {
-            _likedComments.remove(comment);
+          if (liked) {
+            userlikes[comment].remove(widget.userId);
           } else {
-            _likedComments.add(comment);
+            userlikes[comment].add(widget.userId);
           }
         });
-      },
+      }
     );
   }
 
