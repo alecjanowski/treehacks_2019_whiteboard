@@ -104,9 +104,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         .of(context)
         .platform == TargetPlatform.iOS;
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(''),
-        ),
+
         body: Stack(
           children: <Widget>[
             _showBody(),
