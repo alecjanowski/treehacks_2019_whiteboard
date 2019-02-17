@@ -221,11 +221,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Whiteboard'),
+          title: new Text(
+              'Whiteboard',
+              style: new TextStyle(color: Colors.white),
+          ),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
-                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+                    style: new TextStyle(color: Colors.white)),
                 onPressed: _signOut),
 //            IconButton(
 //              icon: Icon(Icons.add),
@@ -244,7 +247,10 @@ class _HomePageState extends State<HomePage> {
             _showDialog(context);
           },
           tooltip: 'Increment',
-          child: Icon(Icons.add),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         )
     );
   }
