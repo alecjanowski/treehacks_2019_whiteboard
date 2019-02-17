@@ -39,14 +39,6 @@ class _HomePageState extends State<HomePage> {
 
     _checkEmailVerification();
 
-    _todoList = new List();
-    _todoQuery = _database
-        .reference()
-        .child("todo")
-        .orderByChild("userId")
-        .equalTo(widget.userId);
-    _onTodoAddedSubscription = _todoQuery.onChildAdded.listen(_onEntryAdded);
-    _onTodoChangedSubscription = _todoQuery.onChildChanged.listen(_onEntryChanged);
   }
 
   void _checkEmailVerification() async {
@@ -110,28 +102,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  @override
-  void dispose() {
-    _onTodoAddedSubscription.cancel();
-    _onTodoChangedSubscription.cancel();
-    super.dispose();
-  }
 
-  _onEntryChanged(Event event) {
-    var oldEntry = _todoList.singleWhere((entry) {
-      return entry.key == event.snapshot.key;
-    });
-
-    setState(() {
-      _todoList[_todoList.indexOf(oldEntry)] = Todo.fromSnapshot(event.snapshot);
-    });
-  }
-
-  _onEntryAdded(Event event) {
-    setState(() {
-      _todoList.add(Todo.fromSnapshot(event.snapshot));
-    });
-  }
 
   _signOut() async {
     try {
@@ -142,30 +113,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _addNewTodo(String todoItem) {
-    if (todoItem.length > 0) {
 
-      Todo todo = new Todo(todoItem.toString(), widget.userId, false);
-      _database.reference().child("todo").push().set(todo.toJson());
-    }
-  }
-
-  _updateTodo(Todo todo){
-    //Toggle completed
-    todo.completed = !todo.completed;
-    if (todo != null) {
-      _database.reference().child("todo").child(todo.key).set(todo.toJson());
-    }
-  }
-
-  _deleteTodo(String todoId, int index) {
-    _database.reference().child("todo").child(todoId).remove().then((_) {
-      print("Delete $todoId successful");
-      setState(() {
-        _todoList.removeAt(index);
-      });
-    });
-  }
 
   _showDialog(BuildContext context) async {
     _textEditingController.clear();
@@ -194,7 +142,6 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('Post'),
                   onPressed: () {
                     AppServices.getMessageService().postMessage(_textEditingController.text.toString());
-                    _addNewTodo(_textEditingController.text.toString());
                     Navigator.pop(context);
                   })
             ],
@@ -243,7 +190,8 @@ class _HomePageState extends State<HomePage> {
 //            ),
           ],
         ),
-        body: new TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0),
+        body: new TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
             _showDialog(context);
