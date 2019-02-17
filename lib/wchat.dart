@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:treehacks_2019_whiteboard/services/authentication.dart';
-import 'package:treehacks_2019_whiteboard/pages/root_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:async';
