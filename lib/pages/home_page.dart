@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treehacks_2019_whiteboard/AppServices.dart';
 import 'package:treehacks_2019_whiteboard/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:treehacks_2019_whiteboard/models/todo.dart';
@@ -239,8 +240,9 @@ class _HomePageState extends State<HomePage> {
         ),
         body: _showTodoList(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _showDialog(context);
+          onPressed: () async{
+            bool success = await AppServices.getMessageService().postMessage("testing messages");
+            //todo give a shit
           },
           tooltip: 'Increment',
           child: Icon(Icons.add),
