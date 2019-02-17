@@ -57,7 +57,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           _isLoading = false;
         });
 
-        if (userId.length > 0 && userId != null &&
+        if (userId.length > 0 &&
+            userId != null &&
             _formMode == FormMode.LOGIN) {
           widget.onSignedIn();
         }
@@ -73,7 +74,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       }
     }
   }
-
 
   @override
   void initState() {
@@ -100,24 +100,24 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    _isIos = Theme
-        .of(context)
-        .platform == TargetPlatform.iOS;
+    _isIos = Theme.of(context).platform == TargetPlatform.iOS;
     return new Scaffold(
-
         body: Stack(
-          children: <Widget>[
-            _showBody(),
-            _showCircularProgress(),
-          ],
-        ));
+      children: <Widget>[
+        _showBody(),
+        _showCircularProgress(),
+      ],
+    ));
   }
 
   Widget _showCircularProgress() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
     }
-    return Container(height: 0.0, width: 0.0,);
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
   }
 
   void _showVerifyEmailSentDialog() {
@@ -127,8 +127,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Verify your account"),
-          content: new Text(
-              "Link to verify account has been sent to your email"),
+          content:
+              new Text("Link to verify account has been sent to your email"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Dismiss"),
@@ -178,8 +178,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       );
     }
   }
-
-
 
   Widget _showLogo() {
     return new Hero(
@@ -237,10 +235,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     return new FlatButton(
       child: _formMode == FormMode.LOGIN
           ? new Text('Create an account',
-          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300))
+              style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300))
           : new Text('Have an account? Sign in',
-          style:
-          new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
+              style:
+                  new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
       onPressed: _formMode == FormMode.LOGIN
           ? _changeFormToSignUp
           : _changeFormToLogin,
@@ -259,12 +257,11 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
             color: Colors.orange,
             child: _formMode == FormMode.LOGIN
                 ? new Text('Login',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white))
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white))
                 : new Text('Create account',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: _validateAndSubmit,
           ),
         ));
   }
 }
-
