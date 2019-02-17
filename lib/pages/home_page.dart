@@ -205,8 +205,7 @@ class _HomePageState extends State<HomePage> {
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
+          if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
           final index = i ~/ 2; /*3*/
           if (index >= _comments.length) {
             _comments.add('New Comment');
@@ -248,19 +247,6 @@ class _HomePageState extends State<HomePage> {
           child: Icon(Icons.add),
         )
     );
-  }
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _comments.length) {
-            _comments.add('New Comment');
-          }
-          return _buildRow(_comments[index]);
-        });
   }
 
   Widget _buildRow(String comment) {
