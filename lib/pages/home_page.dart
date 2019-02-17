@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                   controller: _textEditingController,
                   autofocus: true,
                   decoration: new InputDecoration(
-                    labelText: 'Add new todo',
+                    labelText: 'How are you?',
                   ),
                 ))
               ],
@@ -189,8 +189,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pop(context);
                   }),
               new FlatButton(
-                  child: const Text('Save'),
+                  child: const Text('Post'),
                   onPressed: () {
+                    AppServices.getMessageService().postMessage(_textEditingController.text.toString());
                     _addNewTodo(_textEditingController.text.toString());
                     Navigator.pop(context);
                   })
@@ -221,7 +222,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Flutter login demo'),
+          title: new Text('Whiteboard'),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
@@ -241,8 +242,7 @@ class _HomePageState extends State<HomePage> {
         body: _showTodoList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
-            bool success = await AppServices.getMessageService().postMessage("testing messages");
-            //todo give a shit
+            _showDialog(context);
           },
           tooltip: 'Increment',
           child: Icon(Icons.add),
