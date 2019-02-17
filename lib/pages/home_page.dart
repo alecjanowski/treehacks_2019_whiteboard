@@ -286,19 +286,19 @@ class _HomePageState extends State<HomePage> {
         comment,
         style: _biggerFont,
       ),
-//      trailing: new Icon(
-//        alreadyLiked ? Icons.favorite : Icons.favorite_border,
-//        color: alreadyLiked ? Colors.red : null,
-//      ),
-//      onTap: () {      // Add 9 lines from here...
-//        setState(() {
-//          if (alreadyLiked) {
-//            _likedComments.remove(comment);
-//          } else {
-//            _likedComments.add(comment);
-//          }
-//        });
-//      },
+      trailing: new Icon(
+        alreadyLiked ? Icons.favorite : Icons.favorite_border,
+        color: alreadyLiked ? Colors.red : null,
+      ),
+      onTap: () {      // Add 9 lines from here...
+        setState(() {
+          if (alreadyLiked) {
+            _likedComments.remove(comment);
+          } else {
+            _likedComments.add(comment);
+          }
+        });
+      },
     );
   }
 
