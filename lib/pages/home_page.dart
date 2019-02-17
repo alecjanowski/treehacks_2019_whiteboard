@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
 
   _postMessage(String content) {
 
-    final mainReference = FirebaseDatabase.instance.reference().child("/treehacks-project");
+    final mainReference = FirebaseDatabase.instance.reference().child("/messages    ");
     Message message = new Message(content, widget.userId);
     mainReference.push().set(message.toJson());
 
