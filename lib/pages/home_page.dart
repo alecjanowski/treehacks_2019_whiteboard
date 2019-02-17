@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:treehacks_2019_whiteboard/AppServices.dart';
 import 'package:treehacks_2019_whiteboard/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:treehacks_2019_whiteboard/models/todo.dart';
 import 'dart:async';
+
+import 'package:treehacks_2019_whiteboard/wchat.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.onSignedOut})
@@ -176,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                   controller: _textEditingController,
                   autofocus: true,
                   decoration: new InputDecoration(
-                    labelText: 'Add new todo',
+                    labelText: 'How are you?',
                   ),
                 ))
               ],
@@ -188,8 +191,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pop(context);
                   }),
               new FlatButton(
-                  child: const Text('Save'),
+                  child: const Text('Post'),
                   onPressed: () {
+                    AppServices.getMessageService().postMessage(_textEditingController.text.toString());
                     _addNewTodo(_textEditingController.text.toString());
                     Navigator.pop(context);
                   })
@@ -203,8 +207,7 @@ class _HomePageState extends State<HomePage> {
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
+          if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
           final index = i ~/ 2; /*3*/
           if (index >= _comments.length) {
             _comments.add('New Comment');
@@ -220,45 +223,38 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Flutter login demo'),
+          title: new Text(
+              'Whiteboard',
+              style: new TextStyle(color: Colors.white),
+          ),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
-                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+                    style: new TextStyle(color: Colors.white)),
                 onPressed: _signOut),
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PostRoute()),
-                );
-              },
-            ),
+//            IconButton(
+//              icon: Icon(Icons.add),
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => PostRoute()),
+//                );
+//              },
+//            ),
           ],
         ),
-        body: _showTodoList(),
+        body: new TextWall(userid: widget.userId, latitude: 1.0, longitude: 1.0),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async{
             _showDialog(context);
           },
           tooltip: 'Increment',
-          child: Icon(Icons.add),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         )
     );
-  }
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _comments.length) {
-            _comments.add('New Comment');
-          }
-          return _buildRow(_comments[index]);
-        });
   }
 
   Widget _buildRow(String comment) {
@@ -266,44 +262,6 @@ class _HomePageState extends State<HomePage> {
       title: Text(
         comment,
         style: _biggerFont,
-      ),
-    );
-  }
-}
-
-class PostRoute extends StatefulWidget {
-  @override
-  createState() => _PostRouteState();
-}
-
-class _PostRouteState extends State<PostRoute> {
-  bool _isPushed = false;
-  var _color = Colors.purple;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-//            Navigator.pop(context);
-            setState(() {
-              if (_isPushed) {
-                print('I was pressed');
-                _color = Colors.red;
-                _isPushed = false;
-              } else {
-                print('I was unpressed');
-                _color = Colors.blue;
-                _isPushed = true;
-              }
-            });
-          },
-          color: _color,
-        ),
       ),
     );
   }

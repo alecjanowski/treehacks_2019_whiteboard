@@ -105,7 +105,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         .platform == TargetPlatform.iOS;
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Flutter login demo'),
+          title: new Text(''),
         ),
         body: Stack(
           children: <Widget>[
@@ -181,15 +181,17 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     }
   }
 
+
+
   Widget _showLogo() {
     return new Hero(
       tag: 'hero',
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 48.0,
-          child: Image.asset('assets/flutter-icon.png'),
+          backgroundColor: Colors.orange,
+          radius: 118.0,
+          child: Image.asset('assets/logoWhite.png'),
         ),
       ),
     );
@@ -256,7 +258,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
             elevation: 5.0,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.blue,
+            color: Colors.orange,
             child: _formMode == FormMode.LOGIN
                 ? new Text('Login',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white))

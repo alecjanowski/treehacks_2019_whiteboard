@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'dart:io';
 
+import 'package:treehacks_2019_whiteboard/AppServices.dart';
+
 class TextWall extends StatefulWidget {
   final String userid;
   final double latitude; final double longitude;
@@ -65,7 +67,7 @@ class TextWallState extends State<TextWall> {
       child: location == ''
           ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7e00))))
           : StreamBuilder(
-        stream: Firestore.instance.collection('messages').snapshots(), //gets data from firestore
+        stream: AppServices.getFB().getFirestore().collection('messages').snapshots(), //gets data from firestore
         builder: (context, snapshot) { //builds the message list from snapshot data
           if (!snapshot.hasData) {
             return Center(
@@ -87,13 +89,12 @@ class TextWallState extends State<TextWall> {
 
   // Draws each individual message
   Widget buildItem(int index, DocumentSnapshot document) {
-    if (document['userId'] == userid) {
-      // Right (my message)
+
       return Row(
         children: <Widget>[
           Container(
             child: Text(
-              document['content'],
+              document['message'],
               style: TextStyle(color: Color(0xfffff5)),
             ),
             padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -104,24 +105,7 @@ class TextWallState extends State<TextWall> {
         ],
         mainAxisAlignment: MainAxisAlignment.end,
       );
-    }
-    else {
-      return Row(
-        children: <Widget>[
-          Container(
-            child: Text(
-              document['content'],
-              style: TextStyle(color: Color(0xfffff5)),
-            ),
-            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-            width: 200.0,
-            decoration: BoxDecoration(color: Color(0x410806), borderRadius: BorderRadius.circular(8.0)),
-            margin: EdgeInsets.only(left: 10.0),
-          )
-        ],
-        mainAxisAlignment: MainAxisAlignment.end,
-      );
-    }
+
   }
 
   /*
