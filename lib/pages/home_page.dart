@@ -156,15 +156,15 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: /*1*/ (context, i) {
           if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
           final index = i ~/ 2; /*3*/
-          if (index >= _comments.length) {
-            _comments.add('New Comment');
+          if (index < _comments.length) {
+            return _buildRow(_comments[index]);
           }
-          return _buildRow(_comments[index]);
         });
   }
 
   var _comments = <String>['I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. I am happy. ', 'I am tired', 'I am excited'];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  final Set<String> _likedComments = new Set<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -206,11 +206,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildRow(String comment) {
+    final bool alreadyLiked = _likedComments.contains(comment);
     return ListTile(
       title: Text(
         comment,
         style: _biggerFont,
       ),
+      trailing: new Icon(
+        alreadyLiked ? Icons.favorite : Icons.favorite_border,
+        color: alreadyLiked ? Colors.red : null,
+      ),
+      onTap: () {      // Add 9 lines from here...
+        setState(() {
+          if (alreadyLiked) {
+            _likedComments.remove(comment);
+          } else {
+            _likedComments.add(comment);
+          }
+        });
+      },
     );
   }
 }
