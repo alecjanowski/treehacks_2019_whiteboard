@@ -57,7 +57,7 @@ class TextWallState extends State<TextWall> {
           buildLoading()
         ],
       );*/
-      // loading
+    // loading
   }
 
   Widget buildListMessage() {
@@ -69,16 +69,16 @@ class TextWallState extends State<TextWall> {
             return Center(
                 child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7e00))));
           } else {*/
-            listMessage = snapshot.data.documents;
-            return ListView.builder(
-              //padding: EdgeInsets.all(10.0),
-              itemBuilder: (context, index) {
-                return buildItem(index, listMessage[index]['message']);
-              },
-              itemCount: snapshot.data.documents.length,
-              reverse: true,
-              controller: listScrollController,
-            );
+          listMessage = snapshot.data.documents;
+          return ListView.builder(
+            //padding: EdgeInsets.all(10.0),
+            itemBuilder: (context, index) {
+              return buildItem(index, listMessage[index]['message']);
+            },
+            itemCount: snapshot.data.documents.length,
+            reverse: true,
+            controller: listScrollController,
+          );
         },
       ),
     );
@@ -86,21 +86,21 @@ class TextWallState extends State<TextWall> {
 
   // Draws each individual message
   Widget buildItem(int index, String document) {
-      return Row(
-        children: <Widget>[
-          Container(
-            child: Text(
-              document,
-              
-            ),
-            /*padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+    return Row(
+      children: <Widget>[
+        Container(
+          child: Text(
+            document,
+
+          ),
+          /*padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
             width: 200.0,
             decoration: BoxDecoration(color: Color(0xff9835), borderRadius: BorderRadius.circular(8.0)),
             margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20.0 : 10.0, right: 10.0),*/
-          )
-        ],
-        //mainAxisAlignment: MainAxisAlignment.end,
-      );
+        )
+      ],
+      //mainAxisAlignment: MainAxisAlignment.end,
+    );
 
   }
 
@@ -178,4 +178,6 @@ class TextWallState extends State<TextWall> {
     Navigator.pop(context);
     return Future.value(false);
   }
+
+
 }

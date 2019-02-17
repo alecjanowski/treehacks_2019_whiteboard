@@ -20,6 +20,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Todo> _todoList;
 
+  var listMessage;
+
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -241,8 +243,29 @@ class _HomePageState extends State<HomePage> {
 //            ),
           ],
         ),
-        body: _showTodoList(),
-        bottomNavigationBar: buildBar(context),
+        body: StreamBuilder(
+          stream: AppServices.getFB().getFirestore().collection('messages').snapshots(), //gets data from firestore
+          builder: (context, snapshot) { //builds the message list from snapshot data
+            /*if (!snapshot.hasData) {
+            return Center(
+                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xff7e00))));
+          } else {*/
+            listMessage = snapshot.data.documents;
+            return ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemBuilder: /*1*/ (context, i) {
+                  if (i.isOdd) return Divider(key: UniqueKey(), height: 1.0, color: Colors.grey,); /*2*/
+                  final index = i ~/ 2; /*3*/
+                  if (index < snapshot.data.documents.length) {
+                    return _buildRow(listMessage[index]['message']);
+                  }
+                },
+              reverse: true,
+            );
+          },
+        ),
+//        body: _showTodoList(),
+//        bottomNavigationBar: buildBar(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () async{
             _showDialog(context);
@@ -263,19 +286,19 @@ class _HomePageState extends State<HomePage> {
         comment,
         style: _biggerFont,
       ),
-      trailing: new Icon(
-        alreadyLiked ? Icons.favorite : Icons.favorite_border,
-        color: alreadyLiked ? Colors.red : null,
-      ),
-      onTap: () {      // Add 9 lines from here...
-        setState(() {
-          if (alreadyLiked) {
-            _likedComments.remove(comment);
-          } else {
-            _likedComments.add(comment);
-          }
-        });
-      },
+//      trailing: new Icon(
+//        alreadyLiked ? Icons.favorite : Icons.favorite_border,
+//        color: alreadyLiked ? Colors.red : null,
+//      ),
+//      onTap: () {      // Add 9 lines from here...
+//        setState(() {
+//          if (alreadyLiked) {
+//            _likedComments.remove(comment);
+//          } else {
+//            _likedComments.add(comment);
+//          }
+//        });
+//      },
     );
   }
 
@@ -305,3 +328,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
