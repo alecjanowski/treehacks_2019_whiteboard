@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:treehacks_2019_whiteboard/AppServices.dart';
 import 'package:treehacks_2019_whiteboard/services/authentication.dart';
 import 'package:treehacks_2019_whiteboard/pages/root_page.dart';
 
-void main() {
+void main() async{
+  await AppServices.init();
   runApp(new MyApp());
 }
 
